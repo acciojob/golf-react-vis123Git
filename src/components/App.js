@@ -14,7 +14,11 @@ class App extends Component {
     };
 
     buttonClickHandler() {
-   
+        this.setState(()=>{
+            this.state.renderBall = true;
+            this.state.posi += 5;
+            this.state.ballPosition.left = `${this.state.posi}px`;
+        })
    }
     renderBallOrButton() {
 		if (this.state.renderBall) {
