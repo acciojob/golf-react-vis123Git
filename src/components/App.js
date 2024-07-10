@@ -7,24 +7,28 @@ class App extends Component {
         this.state = {
             renderBall: false,
             posi : 0,
-            ballPosition: { left: "0px" }
+            ballPosition: { left: "0px" },
+            buttonVisible: true
+
         };
         this.renderChoice = this.renderBallOrButton.bind(this)
         this.buttonClickHandler = this.buttonClickHandler.bind(this)
     };
 
-    buttonClickHandler() {
+    buttonClickHandler(e) {
         this.setState(()=>{
             this.state.renderBall = true;
             this.state.posi += 5;
             this.state.ballPosition.left = `${this.state.posi}px`;
+            this.state.buttonVisible = false
+
         })
    }
     renderBallOrButton() {
 		if (this.state.renderBall) {
 		    return <div className="ball" style={this.state.ballPosition}></div>
 		} else {
-		    return <button onClick={this.buttonClickHandler} >Start</button>
+		    return <button onClick={this.buttonClickHandler} className="start">Start</button>
 		}
     }
 
