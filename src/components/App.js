@@ -13,16 +13,17 @@ class App extends Component {
         };
         this.renderChoice = this.renderBallOrButton.bind(this)
         this.buttonClickHandler = this.buttonClickHandler.bind(this)
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+
     };
 
     buttonClickHandler(e) {
-        this.setState(()=>{
-            this.state.renderBall = true;
-            this.state.posi += 5;
-            this.state.ballPosition.left = `${this.state.posi}px`;
-            this.state.buttonVisible = false
-
-        })
+        this.setState((prevState) => ({
+            renderBall: true,
+            posi: prevState.posi,
+            ballPosition: { left: `${prevState.posi}px` },
+            buttonVisible: false
+        }));
    }
     renderBallOrButton() {
 		if (this.state.renderBall) {
@@ -32,9 +33,22 @@ class App extends Component {
 		}
     }
 
-    // bind ArrowRight keydown event
+    handleKeyDown(e) {
+        if (e.key === 'ArrowRight' || e.keyCode === 39) {
+            this.setState((prevState) => ({
+                posi: prevState.posi + 5,
+                ballPosition: { left: `${prevState.posi + 5}px` }
+            }));
+        }
+    }
+
+
     componentDidMount() {
-      
+        document.addEventListener('keydown', this.handleKeyDown);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown);
     }
 
     render() {
